@@ -7,7 +7,7 @@ const cards = cardDeck.getElementsByClassName('card');
 const matched = cardDeck.getElementsByClassName('match');
 const arrayOfCards = Array.from(cards);
 const overlay = document.getElementById('overlay');
-const congrats = document.getElementById('congrats')
+const congrats = document.getElementById('congrats');
 const playAg = document.querySelector('.playAgain');
 // create empty array for opened cards and matched cards
 let openedCardsArr = [];
@@ -23,7 +23,7 @@ let openedCardsArr = [];
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
 
-    var currentIndex = array.length,
+    let currentIndex = array.length,
         temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -35,18 +35,9 @@ function shuffle(array) {
     }
     return array;
 }
-// function that shuffles cards and adds them to the deck
 
-const newGame = function() {
 
-    shuffle(arrayOfCards);
-    congrats.style.height = "0%";
-    for (const card of arrayOfCards) {
-        cardDeck.appendChild(card);
-        card.classList.remove("show", "open", "match", "noclick");
-    }
 
-};
 
 // const newGame = function() {
 //     shuffle(arrayOfCards);
@@ -57,56 +48,73 @@ const newGame = function() {
 
 // };
 
-// start new game
+// main function
+const game = function() {
+    this.classList.toggle("open");
+    this.classList.toggle("show");
+    this.classList.toggle("noclick"); //prevent double click
+    openedCardsArr.push(this);
+
+    if (openedCardsArr.length === 2) {
+        //check if cards match and add classes
+        if (openedCardsArr[0].isEqualNode(openedCardsArr[1])) {
+
+            openedCardsArr[0].classList.toggle("match");
+            openedCardsArr[1].classList.toggle("match");
+            openedCardsArr[0].classList.remove("show", "open");
+            openedCardsArr[1].classList.remove("show", "open");
+            openedCardsArr = [];
+
+            // display congratulations if all card match
+            if (matched.length === arrayOfCards.length) {
+                congrats.style.height = "50%";
+            }
+        } else {
+            // set transparent overlay to prevent player clisks more than two cards
+            overlay.classList.toggle('overlay');
+            //timeout function allows player to see cards before they close again
+            setTimeout(function() {
+                openedCardsArr[0].classList.remove("show", "open", "noclick");
+                openedCardsArr[1].classList.remove("show", "open", "noclick");
+                openedCardsArr = [];
+                overlay.classList.remove('overlay');
+            }, 900);
+        }
+
+    } else {
+
+
+
+    }
+
+};
+// open card on click
+const startGame = function() {
+    for (const card of arrayOfCards) {
+        card.addEventListener("click", game);
+    }
+};
+// function: shuffle cards, add them to the deck and start new game
+const newGame = function() {
+
+    shuffle(arrayOfCards);
+    congrats.style.height = "0%";
+
+    for (const card of arrayOfCards) {
+        cardDeck.appendChild(card);
+        card.classList.remove("show", "open", "match", "noclick");
+
+    }
+    startGame();
+};
+
+// event listeners for starting new game
 window.addEventListener('load', newGame);
 const restart = document.querySelector('.restart');
 restart.addEventListener("click", newGame);
 playAg.addEventListener("click", newGame);
 
 
-// open card on click
-for (const card of arrayOfCards) {
-    card.addEventListener("click", function() {
-        this.classList.toggle("open");
-        this.classList.toggle("show");
-        this.classList.toggle("noclick"); //prevent double click
-        openedCardsArr.push(this);
-
-        if (openedCardsArr.length === 2) {
-
-            if (openedCardsArr[0].isEqualNode(openedCardsArr[1])) {
-
-                openedCardsArr[0].classList.toggle("match");
-                openedCardsArr[1].classList.toggle("match");
-                openedCardsArr[0].classList.remove("show", "open");
-                openedCardsArr[1].classList.remove("show", "open");
-                openedCardsArr = [];
-
-                // if (matched.length === arrayOfCards.length) {
-                //     congrats.classList.toggle('congrats');
-                // }
-                if (matched.length === arrayOfCards.length) {
-                    congrats.style.height = "50%";
-                }
-            } else {
-                overlay.classList.toggle('overlay');
-                setTimeout(function() {
-                    openedCardsArr[0].classList.remove("show", "open", "noclick");
-                    openedCardsArr[1].classList.remove("show", "open", "noclick");
-                    openedCardsArr = [];
-                    overlay.classList.remove('overlay');
-                }, 900);
-            }
-
-        } else {
-
-
-
-        }
-
-    });
-
-}
 
 
 // const cardsl = cardDeck.getElementsByTagName('i');
