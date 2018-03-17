@@ -7,6 +7,8 @@ const cards = cardDeck.getElementsByClassName('card');
 const matched = cardDeck.getElementsByClassName('match');
 const arrayOfCards = Array.from(cards);
 const overlay = document.getElementById('overlay');
+const congrats = document.getElementById('congrats')
+const playAg = document.querySelector('.playAgain');
 // create empty array for opened cards and matched cards
 let openedCardsArr = [];
 
@@ -38,7 +40,7 @@ function shuffle(array) {
 const newGame = function() {
 
     shuffle(arrayOfCards);
-
+    congrats.style.height = "0%";
     for (const card of arrayOfCards) {
         cardDeck.appendChild(card);
         card.classList.remove("show", "open", "match", "noclick");
@@ -59,7 +61,7 @@ const newGame = function() {
 window.addEventListener('load', newGame);
 const restart = document.querySelector('.restart');
 restart.addEventListener("click", newGame);
-
+playAg.addEventListener("click", newGame);
 
 
 // open card on click
@@ -79,6 +81,13 @@ for (const card of arrayOfCards) {
                 openedCardsArr[0].classList.remove("show", "open");
                 openedCardsArr[1].classList.remove("show", "open");
                 openedCardsArr = [];
+
+                // if (matched.length === arrayOfCards.length) {
+                //     congrats.classList.toggle('congrats');
+                // }
+                if (matched.length === arrayOfCards.length) {
+                    congrats.style.height = "50%";
+                }
             } else {
                 overlay.classList.toggle('overlay');
                 setTimeout(function() {
@@ -87,21 +96,19 @@ for (const card of arrayOfCards) {
                     openedCardsArr = [];
                     overlay.classList.remove('overlay');
                 }, 900);
-            };
+            }
 
         } else {
 
-            // openedCardsArr[0].classList.toggle("notmatch");
-            // openedCardsArr[1].classList.toggle("notmatch");
+
 
         }
 
     });
-};
 
-if (matched.length === arrayOfCards.length) {
-    document.getElementById('overlay').classList.toggle('congrats');
 }
+
+
 // const cardsl = cardDeck.getElementsByTagName('i');
 /*
  * set up the event listener for a card. If a card is clicked:
