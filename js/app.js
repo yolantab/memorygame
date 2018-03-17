@@ -4,7 +4,12 @@
 
 const cardDeck = document.querySelector('.deck');
 const cards = cardDeck.getElementsByClassName('card');
+const matched = cardDeck.getElementsByClassName('match');
 const arrayOfCards = Array.from(cards);
+const overlay = document.getElementById('overlay');
+// create empty array for opened cards and matched cards
+let openedCardsArr = [];
+
 
 /*
  * Display the cards on the page
@@ -28,30 +33,76 @@ function shuffle(array) {
     }
     return array;
 }
-//start new game
+// function that shuffles cards and adds them to the deck
 
 const newGame = function() {
+
     shuffle(arrayOfCards);
+
+    for (const card of arrayOfCards) {
+        cardDeck.appendChild(card);
+        card.classList.remove("show", "open", "match", "noclick");
+    }
+
 };
 
+// const newGame = function() {
+//     shuffle(arrayOfCards);
+
+//     for (let i = 0; i < arrayOfCards.length; i++) {
+//         cardDeck.appendChild(arrayOfCards[i]);
+//     }
+
+// };
+
+// start new game
 window.addEventListener('load', newGame);
 const restart = document.querySelector('.restart');
 restart.addEventListener("click", newGame);
 
-/*restart.addEventListener("click", function() {
-    shuffle(arrayOfCards);
-});*/
 
 
-/* function that adds classes for cards*/
+// open card on click
+for (const card of arrayOfCards) {
+    card.addEventListener("click", function() {
+        this.classList.toggle("open");
+        this.classList.toggle("show");
+        this.classList.toggle("noclick"); //prevent double click
+        openedCardsArr.push(this);
 
-function checkCards() {
-    this.classList.toggle("open");
-    this.classList.toggle("show");
-    this.classList.toggle("match");
+        if (openedCardsArr.length === 2) {
+
+            if (openedCardsArr[0].isEqualNode(openedCardsArr[1])) {
+
+                openedCardsArr[0].classList.toggle("match");
+                openedCardsArr[1].classList.toggle("match");
+                openedCardsArr[0].classList.remove("show", "open");
+                openedCardsArr[1].classList.remove("show", "open");
+                openedCardsArr = [];
+            } else {
+                overlay.classList.toggle('overlay');
+                setTimeout(function() {
+                    openedCardsArr[0].classList.remove("show", "open", "noclick");
+                    openedCardsArr[1].classList.remove("show", "open", "noclick");
+                    openedCardsArr = [];
+                    overlay.classList.remove('overlay');
+                }, 900);
+            };
+
+        } else {
+
+            // openedCardsArr[0].classList.toggle("notmatch");
+            // openedCardsArr[1].classList.toggle("notmatch");
+
+        }
+
+    });
+};
+
+if (matched.length === arrayOfCards.length) {
+    document.getElementById('overlay').classList.toggle('congrats');
 }
-const cardsl = cardDeck.getElementsByTagName('i');
-
+// const cardsl = cardDeck.getElementsByTagName('i');
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
