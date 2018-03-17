@@ -150,12 +150,12 @@ h1 {
     display: inline-block;
 }
 
-.score {
+.stars {
     display: inline-block;
     padding: 0;
 }
 
-.score li {
+.stars li {
     list-style: none;
     display: inline-block;
 }

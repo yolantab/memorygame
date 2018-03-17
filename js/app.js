@@ -9,6 +9,14 @@ const arrayOfCards = Array.from(cards);
 const overlay = document.getElementById('overlay');
 const congrats = document.getElementById('congrats');
 const playAg = document.querySelector('.playAgain');
+const stars = document.getElementsByClassName('stars');
+const star1F = stars[0].getElementsByTagName('li')[0]; //last star from cong. panel
+const star2F = stars[0].getElementsByTagName('li')[1]; //second star from cong. panel
+const star1 = stars[1].getElementsByTagName('li')[0]; //last star from score panel
+const star2 = stars[1].getElementsByTagName('li')[1]; //second star score panel
+let moves = 0;
+
+
 // create empty array for opened cards and matched cards
 let openedCardsArr = [];
 
@@ -47,6 +55,23 @@ function shuffle(array) {
 //     }
 
 // };
+const addStar = function() {
+    if (moves === 2) {
+        // stars.removeChild(starF);
+        stars[0].removeChild(star1F);
+        stars[1].removeChild(star1);
+    } else if (moves === 4) {
+        // stars.removeChild(stars[0].firstChild);
+        stars[0].removeChild(star2F);
+        stars[1].removeChild(star2);
+
+    } else {
+        //3 stars
+    }
+}
+
+
+
 
 // main function
 const game = function() {
@@ -56,6 +81,8 @@ const game = function() {
     openedCardsArr.push(this);
 
     if (openedCardsArr.length === 2) {
+        moves++;
+        addStar();
         //check if cards match and add classes
         if (openedCardsArr[0].isEqualNode(openedCardsArr[1])) {
 
@@ -64,6 +91,7 @@ const game = function() {
             openedCardsArr[0].classList.remove("show", "open");
             openedCardsArr[1].classList.remove("show", "open");
             openedCardsArr = [];
+
 
             // display congratulations if all card match
             if (matched.length === arrayOfCards.length) {
@@ -96,9 +124,15 @@ const startGame = function() {
 };
 // function: shuffle cards, add them to the deck and start new game
 const newGame = function() {
+    //reset stars
+    stars[0].appendChild(star1F);
+    stars[1].appendChild(star1);
+    stars[0].appendChild(star2F);
+    stars[1].appendChild(star2);
 
     shuffle(arrayOfCards);
-    congrats.style.height = "0%";
+    congrats.style.height = "50%";
+    moves = 0;
 
     for (const card of arrayOfCards) {
         cardDeck.appendChild(card);
@@ -106,6 +140,7 @@ const newGame = function() {
 
     }
     startGame();
+
 };
 
 // event listeners for starting new game
