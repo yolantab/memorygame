@@ -15,7 +15,13 @@ const star2F = stars[0].getElementsByTagName('li')[1]; //second star from cong. 
 const star1 = stars[1].getElementsByTagName('li')[0]; //last star from score panel
 const star2 = stars[1].getElementsByTagName('li')[1]; //second star score panel
 const movesEl = document.getElementsByClassName('moves');
+const timer = document.getElementsByClassName('time');
+
+let sec = 0;
+let min = 0;
+let hour = 0;
 let moves = 0;
+let time = 0;
 // empty array for opened cards and matched cards
 let openedCardsArr = [];
 
@@ -26,7 +32,23 @@ let openedCardsArr = [];
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+function gameTimer() {
+    time = setInterval(function() {
+        timer[0].innerHTML = min + ":" + sec;
+        timer[1].innerHTML = min + ":" + sec;
+        sec++;
+        if (sec < 10) { sec = "0" + sec; }
+        if (sec === 60) {
+            min++;
+            sec = 0;
 
+        }
+        if (min === 60) {
+            hour++;
+            min = 0;
+        }
+    }, 1000);
+}
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
 
@@ -82,6 +104,7 @@ const game = function() {
     if (openedCardsArr.length === 2) {
         moves++;
         addStar();
+        if (moves === 1) gameTimer();
         movesEl[0].innerHTML = moves;
         movesEl[1].innerHTML = moves;
         //check if cards match and add classes
@@ -97,6 +120,8 @@ const game = function() {
             // display congratulations if all card match
             if (matched.length === arrayOfCards.length) {
                 congrats.style.height = "50%";
+                clearInterval(time);
+
             }
         } else {
             // set transparent overlay to prevent player clisks more than two cards
@@ -132,8 +157,11 @@ const newGame = function() {
     stars[1].appendChild(star2);
 
     shuffle(arrayOfCards);
-    congrats.style.height = "50%";
-    //reset moves counter
+    congrats.style.height = "0%";
+    //reset moves counter and timer
+    clearInterval(time);
+    timer[0].innerHTML = "0:0";
+    timer[1].innerHTML = "0:0";
     moves = 0;
     movesEl[0].innerHTML = moves;
     movesEl[1].innerHTML = moves;
