@@ -159,3 +159,51 @@ h1 {
     list-style: none;
     display: inline-block;
 }
+
+
+/* Medium devices (tablets, 768px and up)*/
+
+@media (min-width: 768px) and (max-width: 899px) {
+    .deck {
+        max-width: 650px;
+        max-height: 650px;
+    }
+    .deck .card {}
+    .container {}
+}
+
+
+/* Small devices (landscape phones, 576px and up)*/
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .deck {
+        max-width: 100%;
+        padding: 20px;
+        box-shadow: none;
+        min-height: 550px;
+    }
+    .deck .card {
+        max-width: 23%;
+        max-height: 120px;
+    }
+}
+
+
+/* Extra small devices (portrait phones, less than 576px)*/
+
+@media screen and (max-width: 575px) {
+    .container {
+        padding: 2%;
+        margin: 0;
+    }
+    .deck {
+        width: 100%;
+        padding: 3px;
+        box-shadow: none;
+        min-height: 440px;
+    }
+    .deck .card {
+        max-width: 23%;
+        max-height: 100px;
+    }
+}
