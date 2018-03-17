@@ -14,10 +14,9 @@ const star1F = stars[0].getElementsByTagName('li')[0]; //last star from cong. pa
 const star2F = stars[0].getElementsByTagName('li')[1]; //second star from cong. panel
 const star1 = stars[1].getElementsByTagName('li')[0]; //last star from score panel
 const star2 = stars[1].getElementsByTagName('li')[1]; //second star score panel
+const movesEl = document.getElementsByClassName('moves');
 let moves = 0;
-
-
-// create empty array for opened cards and matched cards
+// empty array for opened cards and matched cards
 let openedCardsArr = [];
 
 
@@ -83,6 +82,8 @@ const game = function() {
     if (openedCardsArr.length === 2) {
         moves++;
         addStar();
+        movesEl[0].innerHTML = moves;
+        movesEl[1].innerHTML = moves;
         //check if cards match and add classes
         if (openedCardsArr[0].isEqualNode(openedCardsArr[1])) {
 
@@ -132,8 +133,10 @@ const newGame = function() {
 
     shuffle(arrayOfCards);
     congrats.style.height = "50%";
+    //reset moves counter
     moves = 0;
-
+    movesEl[0].innerHTML = moves;
+    movesEl[1].innerHTML = moves;
     for (const card of arrayOfCards) {
         cardDeck.appendChild(card);
         card.classList.remove("show", "open", "match", "noclick");
