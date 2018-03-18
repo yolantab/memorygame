@@ -77,11 +77,11 @@ function shuffle(array) {
 
 // };
 const addStar = function() {
-    if (moves === 2) {
+    if (moves === 16) {
         // stars.removeChild(starF);
         stars[0].removeChild(star1F);
         stars[1].removeChild(star1);
-    } else if (moves === 4) {
+    } else if (moves === 30) {
         // stars.removeChild(stars[0].firstChild);
         stars[0].removeChild(star2F);
         stars[1].removeChild(star2);
@@ -119,7 +119,9 @@ const game = function() {
 
             // display congratulations if all card match
             if (matched.length === arrayOfCards.length) {
-                congrats.style.height = "50%";
+                setTimeout(function() {
+                    congrats.style.height = "50%";
+                }, 2000);
                 clearInterval(time);
 
             }
@@ -132,7 +134,7 @@ const game = function() {
                 openedCardsArr[1].classList.remove("show", "open", "noclick");
                 openedCardsArr = [];
                 overlay.classList.remove('overlay');
-            }, 900);
+            }, 1000);
         }
 
     } else {
