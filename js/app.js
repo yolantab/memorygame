@@ -34,10 +34,14 @@ let openedCardsArr = [];
  */
 function gameTimer() {
     time = setInterval(function() {
+
+        sec++;
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
         timer[0].innerHTML = min + ":" + sec;
         timer[1].innerHTML = min + ":" + sec;
-        sec++;
-        if (sec < 10) { sec = "0" + sec; }
+
         if (sec === 60) {
             min++;
             sec = 0;
@@ -158,11 +162,12 @@ const newGame = function() {
     stars[1].appendChild(star1);
     stars[0].appendChild(star2F);
     stars[1].appendChild(star2);
-
+    clearInterval(time);
     shuffle(arrayOfCards);
     congrats.style.height = "0%";
     //reset moves counter and timer
-    clearInterval(time);
+    sec = 0;
+    min = 0;
     timer[0].innerHTML = "0:0";
     timer[1].innerHTML = "0:0";
     moves = 0;
