@@ -69,7 +69,7 @@ h1 {
 
 .deck .card.open {
     transform: rotateY(180deg);
-    transition: 0.6s;
+    transition: 0.5s;
     background: #02b3e4;
     cursor: default;
 }
@@ -99,6 +99,10 @@ h1 {
 
 .deck .card.noclick {
     pointer-events: none;
+}
+
+.card.match i {
+    transform: rotateY(180deg);
 }
 
 
@@ -138,10 +142,9 @@ h1 {
 }
 
 #congrats {
-    transition-delay: 2s;
     position: fixed;
     background-color: black;
-    opacity: 0.7;
+    opacity: 0.8;
     transition: 400ms;
     overflow: hidden;
     height: 0%;
@@ -151,6 +154,11 @@ h1 {
     color: white;
     flex-direction: column;
     text-align: center;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.gzText {
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .endGame {
@@ -183,8 +191,8 @@ h1 {
         max-width: 650px;
         max-height: 650px;
     }
-    .deck .card {}
-    .container {}
+    /* .deck .card {}
+    .container {} */
 }
 
 
@@ -211,6 +219,10 @@ h1 {
         padding: 2%;
         margin: 0;
     }
+    .score-panel {
+        max-width: 100%;
+        ;
+    }
     .deck {
         width: 100%;
         padding: 3px;
@@ -220,5 +232,8 @@ h1 {
     .deck .card {
         max-width: 23%;
         max-height: 100px;
+    }
+    #congrats {
+        font-size: 0.9em;
     }
 }
