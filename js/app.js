@@ -1,6 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
+/*jshint esversion: 6 */
 
 const cardDeck = document.querySelector('.deck');
 const cards = cardDeck.getElementsByClassName('card');
@@ -19,19 +17,14 @@ const timer = document.getElementsByClassName('time');
 
 let sec = 0;
 let min = 0;
-let hour = 0;
 let moves = 0;
 let time = 0;
 // empty array for opened cards and matched cards
 let openedCardsArr = [];
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+//timer function
+
 function gameTimer() {
     time = setInterval(function() {
 
@@ -47,10 +40,7 @@ function gameTimer() {
             sec = 0;
 
         }
-        if (min === 60) {
-            hour++;
-            min = 0;
-        }
+
     }, 1000);
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -70,17 +60,8 @@ function shuffle(array) {
 }
 
 
-
-
-// const newGame = function() {
-//     shuffle(arrayOfCards);
-
-//     for (let i = 0; i < arrayOfCards.length; i++) {
-//         cardDeck.appendChild(arrayOfCards[i]);
-//     }
-
-// };
-const addStar = function() {
+//remove star after moves
+const removeStar = function() {
     if (moves === 16) {
         // stars.removeChild(starF);
         stars[0].removeChild(star1F);
@@ -93,7 +74,7 @@ const addStar = function() {
     } else {
         //3 stars
     }
-}
+};
 
 
 
@@ -107,7 +88,7 @@ const game = function() {
 
     if (openedCardsArr.length === 2) {
         moves++;
-        addStar();
+        removeStar();
         if (moves === 1) gameTimer();
         movesEl[0].innerHTML = moves;
         movesEl[1].innerHTML = moves;
@@ -168,8 +149,8 @@ const newGame = function() {
     //reset moves counter and timer
     sec = 0;
     min = 0;
-    timer[0].innerHTML = "0:0";
-    timer[1].innerHTML = "0:0";
+    timer[0].innerHTML = "0:00";
+    timer[1].innerHTML = "0:00";
     moves = 0;
     movesEl[0].innerHTML = moves;
     movesEl[1].innerHTML = moves;
